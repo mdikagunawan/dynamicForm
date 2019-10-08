@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\DynamicField;
+use Crypt;
+use Str;
 
 class DynamicFieldController extends Controller
 {
@@ -16,8 +18,12 @@ class DynamicFieldController extends Controller
     function insert(Request $request)
     {
 
-     if($request->ajax())
-     {
+     if($request->ajax()){
+
+        Validator::extend('phone', function($attribute, $value){
+            return Str::startsWith($value, '0')||Str::startsWith($value, '+62');
+        });
+
       $rules = array(
        'nama.*'  => 'required|max:30',
        'username.*'  => 'required|max:30',
@@ -27,10 +33,11 @@ class DynamicFieldController extends Controller
         'regex:/[A-Z]/',      
         'regex:/[0-9]/',      
        ],
-       'email.*'  => 'required',
-       'telefon.*'  => 'required',
+       'email.*'  => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{1,6}$/ix',
+       'telefon.*'  => 'required|phone',
        'posisi.*'  => 'required'
       );
+      
       $error = Validator::make($request->all(), $rules);
       if($error->fails())
       {
@@ -47,11 +54,14 @@ class DynamicFieldController extends Controller
       $posisi = $request->posisi;
       for($count = 0; $count < count($nama); $count++)
       {
+        $encryptPassword = Crypt::encryptString($password[$count]);
+        $fEmail = strtolower($email[$count]);
+        
        $data = array(
         'nama' => $nama[$count],
         'username'  => $username[$count],
-        'password'  => $password[$count],
-        'email'  => $email[$count],
+        'password'  => $encryptPassword,
+        'email'  => $fEmail,
         'telefon'  => $telefon[$count],
         'posisi'  => $posisi[$count]
        );
