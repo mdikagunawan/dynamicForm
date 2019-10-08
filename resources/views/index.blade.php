@@ -66,7 +66,7 @@
                                                 <div class="dropdown">
                                                         <label for="posisi">Posisi</label>
                                                         <select class="form-control @error('posisi') is-invalid @enderror" id="posisi" name="posisi[]" value="{{old('posisi')}}">
-                                                                <option selected>Pilih Posisi...</option>
+                                                                <option disabled selected>Pilih Posisi...</option>
                                                                 <option>Frontend</option>
                                                                 <option>Backend</option>
                                                                 <option>Fullstack</option>
@@ -122,7 +122,7 @@
                             <div class="card-body">
                                 <div class="row">
                                 <div class="col-lg-11"></div>
-                                <div class="col-lg-1">
+                                <div class="col-lg-1" style="text-align: right">
                                         <button type="button" name="close" id="`+i+`" class="btn btn-danger btn_close">X</button>
                                 </div>
                                 </div>
@@ -204,7 +204,6 @@
                         }
                         else
                         {
-                            // dynamic_field(1);
                             $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                         }
                         $('#save').attr('disabled', false);
