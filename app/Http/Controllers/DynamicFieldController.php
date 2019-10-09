@@ -11,6 +11,10 @@ use Str;
 class DynamicFieldController extends Controller
 {
     //
+    public function home(){
+        return redirect('/insert');
+    }
+
     public function index(){
         return view('index');
     }
@@ -24,6 +28,10 @@ class DynamicFieldController extends Controller
             return Str::startsWith($value, '0')||Str::startsWith($value, '+62');
         });
 
+        Validator::extend('position', function($attribute, $value){
+            return $value=='Frontend'||$value=='Backend'||$value=='Fullstack';
+        });
+
       $rules = array(
        'nama.*'  => 'required|max:30',
        'username.*'  => 'required|max:30',
@@ -35,7 +43,7 @@ class DynamicFieldController extends Controller
        ],
        'email.*'  => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{1,6}$/ix',
        'telefon.*'  => 'required|phone',
-       'posisi.*'  => 'required'
+       'posisi.*'  => 'required|position'
       );
       
       $error = Validator::make($request->all(), $rules);

@@ -4,7 +4,7 @@
     <title>Insert</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Insert</a>
+                        <a class="nav-link" href="/insert">Insert</a>
                     </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/data">Data</a>
@@ -66,7 +66,7 @@
                                                 <div class="dropdown">
                                                         <label for="posisi">Posisi</label>
                                                         <select class="form-control @error('posisi') is-invalid @enderror" id="posisi" name="posisi[]" value="{{old('posisi')}}">
-                                                                <option disabled selected>Pilih Posisi...</option>
+                                                                <option selected>Pilih Posisi...</option>
                                                                 <option>Frontend</option>
                                                                 <option>Backend</option>
                                                                 <option>Fullstack</option>

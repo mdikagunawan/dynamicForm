@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'null' => ':attribute harus dipilih',
+    'position' => ':attribute harus dipilih',
     'phone' => ':attribute harus diawali dengan 0 atau +62',
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
