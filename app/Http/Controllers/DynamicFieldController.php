@@ -45,8 +45,15 @@ class DynamicFieldController extends Controller
        'telefon.*'  => 'required|phone',
        'posisi.*'  => 'required|position'
       );
-      
-      $error = Validator::make($request->all(), $rules);
+
+      $attributeNames = array(
+        'nama.*' => 'Nama pada form',
+        'cat' => 'Category',     
+     );
+     
+     
+     $error = Validator::make($request->all(), $rules);
+     $error->setAttributeNames($attributeNames);
       if($error->fails())
       {
        return response()->json([

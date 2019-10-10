@@ -134,6 +134,9 @@ return [
         'email.*' => [
             'regex' => 'Format :attribute tidak valid',
         ],
+        'email' => [
+            'regex' => 'Format :attribute tidak valid',
+        ],
     ],
 
     /*

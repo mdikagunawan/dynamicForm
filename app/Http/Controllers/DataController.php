@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use DB;
 use Validator;
+use Str;
 
 class DataController extends Controller
 {
@@ -59,8 +60,23 @@ class DataController extends Controller
       if($error->fails())
       {
         //   dd($error->errors()->all());
-        $stringError = serialize($error->errors()->all());
+        // dd(implode("<br>",$error->errors()->all()));
+        $errorMessage=$error->errors()->all();
+        $stringError=implode("<br>",$errorMessage);
         return Redirect::to(URL::previous() . "#".$data->email)->with('status'.$request->id, $stringError);
+      }else {
+        $data = DynamicField::find($request->id);
+
+        DynamicField::where('id',$data->id)->update([
+        'nama' => $request->nama,
+        'username' => $request->username,
+        'password' => $request->password,
+        'email' => $request->email,
+        'telefon' => $request->telefon,
+        'posisi' => $request->posisi
+        ]);
+
+        return Redirect::to(URL::previous() . '#'.$data->email)->with('berhasil'.$request->id,'Data berhasil diedit');
       }
     }
     
