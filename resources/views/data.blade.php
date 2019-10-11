@@ -60,12 +60,12 @@
                     <tbody>
                         @foreach($data as $d)
                         <tr>
-                            <td width="14.25%">{{$d->nama}}</td>
-                            <td width="14.25%">{{$d->username}}</td>
+                            <td width="14.25%">{{str_replace("_"," ",$d->nama)}}</td>
+                            <td width="14.25%">{{str_replace("_"," ",$d->username)}}</td>
                             <td width="14.25%">••••••••</td>
-                            <td width="14.25%">{{$d->email}}</td>
-                            <td width="14.25%">{{$d->telefon}}</td>
-                            <td width="14.25%">{{$d->posisi}}</td>
+                            <td width="14.25%">{{str_replace("_"," ",$d->email)}}</td>
+                            <td width="14.25%">{{str_replace("_"," ",$d->telefon)}}</td>
+                            <td width="14.25%">{{str_replace("_"," ",$d->posisi)}}</td>
                             <td id='{{$d->email}}' width="14.25%">
                                 <div  style="text-align: center">
                                         <div>
@@ -218,12 +218,17 @@
                 var button = $(e.relatedTarget)
 
                 var id = button.data('id')
-                var nama = button.data('nama')
-                var username = button.data('username')
+                var bnama = button.data('nama')
+                var busername = button.data('username')
                 var password = button.data('password')
                 var email = button.data('email')
                 var telefon = button.data('telefon')
                 var posisi = button.data('posisi')
+
+                var nama = bnama.replace("_", " ");
+                var username = busername.replace("_", " ");
+
+                console.log(nama);
                 
                 var modal = $(this)
 
@@ -231,12 +236,12 @@
     
                 htmlLabelEdit.innerHTML = "Edit Data "+email;
 
-                // $('#nama').attr('value',nama);
-                // $('#username').attr('value',username);
+                $('#nama').attr('value',nama);
+                $('#username').attr('value',username);
                 // $('#password').attr('value',password);
-                // $('#email').attr('value',email);
-                // $('#telefon').attr('value',telefon);
-                // $("#posisi").val(posisi);
+                $('#email').attr('value',email);
+                $('#telefon').attr('value',telefon);
+                $("#posisi").val(posisi);
 
                 modal.find('.modal-body #id').val(id);
                 })

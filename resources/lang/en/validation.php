@@ -137,6 +137,12 @@ return [
         'email' => [
             'regex' => 'Format :attribute tidak valid',
         ],
+        'telefon.*' => [
+            'regex' => ':attribute harus angka',
+        ],
+        'telefon' => [
+            'regex' => ':attribute harus angka',
+        ],
     ],
 
     /*

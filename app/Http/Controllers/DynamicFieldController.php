@@ -31,7 +31,7 @@ class DynamicFieldController extends Controller
         Validator::extend('position', function($attribute, $value){
             return $value=='Frontend'||$value=='Backend'||$value=='Fullstack';
         });
-
+      
       $rules = array(
        'nama.*'  => 'required|max:30',
        'username.*'  => 'required|max:30',
@@ -42,13 +42,12 @@ class DynamicFieldController extends Controller
         'regex:/[0-9]/',      
        ],
        'email.*'  => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{1,6}$/ix',
-       'telefon.*'  => 'required|phone',
+       'telefon.*'  => 'required|regex:/^[0-9]+$/|phone',
        'posisi.*'  => 'required|position'
       );
 
       $attributeNames = array(
         'nama.*' => 'Nama pada form',
-        'cat' => 'Category',     
      );
      
      
@@ -69,14 +68,15 @@ class DynamicFieldController extends Controller
       $posisi = $request->posisi;
       for($count = 0; $count < count($nama); $count++)
       {
-        $encryptPassword = Crypt::encryptString($password[$count]);
-        $fEmail = strtolower($email[$count]);
+        $fNama = str_replace(" ","_",$nama[$count]);
+        $fUsername = str_replace(" ","_",$username[$count]);
+        $fPassword = Crypt::encryptString($password[$count]);
         
        $data = array(
-        'nama' => $nama[$count],
-        'username'  => $username[$count],
-        'password'  => $encryptPassword,
-        'email'  => $fEmail,
+        'nama' => $fNama,
+        'username'  => $fUsername,
+        'password'  => $fPassword,
+        'email'  => $email[$count],
         'telefon'  => $telefon[$count],
         'posisi'  => $posisi[$count]
        );
