@@ -31,10 +31,14 @@ class DynamicFieldController extends Controller
         Validator::extend('position', function($attribute, $value){
             return $value=='Frontend'||$value=='Backend'||$value=='Fullstack';
         });
+
+        Validator::extend('spasi', function($attribute, $value){
+            return !strpos($value, ' ');
+        });
       
       $rules = array(
        'nama.*'  => 'required|max:30',
-       'username.*'  => 'required|max:30',
+       'username.*'  => 'required|max:30|spasi',
        'password.*'  => [
         'required',
         'regex:/[a-z]/',      
@@ -47,12 +51,12 @@ class DynamicFieldController extends Controller
       );
 
       $attributeNames = array(
-        'nama.*' => 'Nama pada form',
+        'nama.*' => 'Nama',
      );
      
      
      $error = Validator::make($request->all(), $rules);
-     $error->setAttributeNames($attributeNames);
+    //  $error->setAttributeNames($attributeNames);
       if($error->fails())
       {
        return response()->json([
@@ -69,12 +73,11 @@ class DynamicFieldController extends Controller
       for($count = 0; $count < count($nama); $count++)
       {
         $fNama = str_replace(" ","_",$nama[$count]);
-        $fUsername = str_replace(" ","_",$username[$count]);
         $fPassword = Crypt::encryptString($password[$count]);
         
        $data = array(
         'nama' => $fNama,
-        'username'  => $fUsername,
+        'username'  => $username[$count],
         'password'  => $fPassword,
         'email'  => $email[$count],
         'telefon'  => $telefon[$count],

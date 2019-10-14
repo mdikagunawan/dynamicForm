@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\URL;
 use DB;
 use Validator;
 use Str;
+use Crypt;
 
 class DataController extends Controller
 {
@@ -21,6 +22,11 @@ class DataController extends Controller
     public function search(Request $request){
 
         $search = $request->search;
+
+            if (strpos($search, ' ')) {
+                $search = str_replace(" ","_",$search);
+            }
+
             $data = DynamicField::where('nama','like',"%".$search."%")
                       ->orWhere('username','like',"%".$search."%")
                       ->orWhere('email','like',"%".$search."%")
@@ -42,9 +48,13 @@ class DataController extends Controller
             return $value=='Frontend'||$value=='Backend'||$value=='Fullstack';
         });
 
+        Validator::extend('spasi', function($attribute, $value){
+            return !strpos($value, ' ');
+        });
+
       $rules = array(
        'nama'  => 'required|max:30',
-       'username'  => 'required|max:30',
+       'username'  => 'required|max:30|spasi',
        'password'  => [
         'required',
         'regex:/[a-z]/',      
@@ -52,7 +62,7 @@ class DataController extends Controller
         'regex:/[0-9]/',      
        ],
        'email'  => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{1,6}$/ix',
-       'telefon'  => 'required|phone',
+       'telefon'  => 'required|regex:/^[0-9]+$/|phone',
        'posisi'  => 'required|position'
       );
       
@@ -63,26 +73,36 @@ class DataController extends Controller
         // dd(implode("<br>",$error->errors()->all()));
         $errorMessage=$error->errors()->all();
         $stringError=implode("<br>",$errorMessage);
-        return Redirect::to(URL::previous() . "#".$data->email)->with('status'.$request->id, $stringError);
+        return Redirect::to(URL::previous() . "#".$data->nama)->with('status'.$request->id, $stringError);
       }else {
         $data = DynamicField::find($request->id);
 
+        $fNama = str_replace(" ","_",$request->nama);
+        $fPassword = Crypt::encryptString($request->password);
+
         DynamicField::where('id',$data->id)->update([
-        'nama' => $request->nama,
+        'nama' => $fNama,
         'username' => $request->username,
-        'password' => $request->password,
+        'password' => $fPassword,
         'email' => $request->email,
         'telefon' => $request->telefon,
         'posisi' => $request->posisi
         ]);
 
-        return Redirect::to(URL::previous() . '#'.$data->email)->with('berhasil'.$request->id,'Data berhasil diedit');
+        return Redirect::to(URL::previous() . '#'.$data->nama)->with('berhasil'.$request->id,'Data berhasil diedit');
       }
     }
     
     public function delete(Request $request){
         $data = DynamicField::find($request->id);
             $data->delete();
-            return redirect()->back()->with('status','Data '.$data->nama.' berhasil dihapus');
+
+            $nama = $data->nama;
+
+            if (strpos($data->nama, '_')) {
+                $nama = str_replace("_"," ",$data->nama);
+            }
+
+            return redirect()->back()->with('status','Data '.$nama.' berhasil dihapus');
     }
 }

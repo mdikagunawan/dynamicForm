@@ -12,9 +12,9 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
-    'position' => ':attribute harus dipilih',
-    'phone' => ':attribute harus diawali dengan 0 atau +62',
+    'spasi' => ':attribute tidak bisa menggunakan spasi.', 
+    'position' => ':attribute harus dipilih.',
+    'phone' => ':attribute harus diawali dengan 0 atau +62.',
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',

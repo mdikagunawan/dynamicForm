@@ -60,13 +60,13 @@
                     <tbody>
                         @foreach($data as $d)
                         <tr>
-                            <td width="14.25%">{{str_replace("_"," ",$d->nama)}}</td>
-                            <td width="14.25%">{{str_replace("_"," ",$d->username)}}</td>
-                            <td width="14.25%">••••••••</td>
-                            <td width="14.25%">{{str_replace("_"," ",$d->email)}}</td>
-                            <td width="14.25%">{{str_replace("_"," ",$d->telefon)}}</td>
-                            <td width="14.25%">{{str_replace("_"," ",$d->posisi)}}</td>
-                            <td id='{{$d->email}}' width="14.25%">
+                            <td width="14.25%" style="min-width: 140px">{{str_replace("_"," ",$d->nama)}}</td>
+                            <td width="14.25%" style="min-width: 140px">{{str_replace("_"," ",$d->username)}}</td>
+                            <td width="14.25%" style="min-width: 140px">••••••••</td>
+                            <td width="14.25%" style="min-width: 140px">{{str_replace("_"," ",$d->email)}}</td>
+                            <td width="14.25%" style="min-width: 140px">{{str_replace("_"," ",$d->telefon)}}</td>
+                            <td width="14.25%" style="min-width: 140px">{{str_replace("_"," ",$d->posisi)}}</td>
+                            <td width="14.25%" style="min-width: 260px" id='{{$d->nama}}' >
                                 <div  style="text-align: center">
                                         <div>
                                                 @if (session('status'.$d->id))
@@ -190,7 +190,7 @@
                 Jumlah Data : {{ $file->total() }} <br/>
                 <br/>
                 {{ $file->links() }} --}}
-                <div style="visibility: hidden"><p style="height: 400px"> </p></div>
+                <div style="visibility: hidden"><p style="height: 200px"> </p></div>
     
               <script>
                     $('#delete').on('show.bs.modal', function(e) {
@@ -208,7 +208,13 @@
 
                         var htmlLabelDelete = document.getElementById('labelDelete')
 
-                        htmlLabelDelete.innerHTML = "Delete data "+email+"?";
+                        if(String(nama).includes("_")){
+
+                            var nama = nama.replace("_", " ");
+
+                        }
+
+                        htmlLabelDelete.innerHTML = "Delete data "+nama+"?";
                         modal.find('.modal-body #id').val(id);
                         })
                 </script>
@@ -218,24 +224,24 @@
                 var button = $(e.relatedTarget)
 
                 var id = button.data('id')
-                var bnama = button.data('nama')
-                var busername = button.data('username')
+                var nama = button.data('nama')
+                var username = button.data('username')
                 var password = button.data('password')
                 var email = button.data('email')
                 var telefon = button.data('telefon')
                 var posisi = button.data('posisi')
-
-                var nama = bnama.replace("_", " ");
-                var username = busername.replace("_", " ");
-
-                console.log(nama);
                 
                 var modal = $(this)
 
                 var htmlLabelEdit = document.getElementById('labelEdit')
-    
-                htmlLabelEdit.innerHTML = "Edit Data "+email;
 
+                if(String(nama).includes("_")){
+
+                var nama = nama.replace("_", " ");
+
+                }
+    
+                htmlLabelEdit.innerHTML = "Edit Data "+nama;
                 $('#nama').attr('value',nama);
                 $('#username').attr('value',username);
                 // $('#password').attr('value',password);
