@@ -72,7 +72,7 @@ class DataController extends Controller
         //   dd($error->errors()->all());
         // dd(implode("<br>",$error->errors()->all()));
         $errorMessage=$error->errors()->all();
-        $stringError=implode("<br>",$errorMessage);
+        $stringError=implode("\n",$errorMessage);
         return Redirect::to(URL::previous() . "#".$data->nama)->with('status'.$request->id, $stringError);
       }else {
         $data = DynamicField::find($request->id);

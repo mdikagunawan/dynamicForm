@@ -120,7 +120,9 @@
                                               <label for="password">Password</label>
                                               <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Masukkan Password" name="password" value="{{old('password')}}">
                                               @error('password') <div class="invalid-feedback">{{$message}}</div> @enderror
-                                          </div>
+                                              <input type="checkbox" class="showPassword  mr-1" id="showPassword" name="showPassword"/>
+                                              <label for="showPassword" disabled>Show Password</label>
+                                            </div>
                                           <div class="form-group">
                                               <label for="email">Email</label>
                                               <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Masukkan Email" name="email" value="{{old('email')}}">
@@ -191,6 +193,17 @@
                 <br/>
                 {{ $file->links() }} --}}
                 <div style="visibility: hidden"><p style="height: 200px"> </p></div>
+
+                <script>
+                    $('.showPassword').on('change',function(){
+                        var isChecked = $(this).prop('checked');
+                        if (isChecked) {
+                            $('#password').attr('type','text');
+                        } else {
+                            $('#password').attr('type','Password');
+                        }
+                        });
+                </script>
     
               <script>
                     $('#delete').on('show.bs.modal', function(e) {
@@ -255,8 +268,9 @@
     
         <script>
         $('#edit').on('hidden.bs.modal', function () {
-        $(this).find('form').trigger('reset');
-    })
+            $(this).find('form').trigger('reset');
+            $('#password').attr('type','Password');
+        })
         </script>
     
         <script>

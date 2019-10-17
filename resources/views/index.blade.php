@@ -90,7 +90,6 @@
             </div>
                 
                 <div class="row">
-                    
                     <div class="col-lg-3"></div>
                     <div class="col-lg-6 mb-5 p-0">
                             <span id="result"></span>
