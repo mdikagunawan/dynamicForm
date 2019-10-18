@@ -14,7 +14,7 @@
 Route::get('/', 'DynamicFieldController@home');
 
 Route::get('/insert', 'DynamicFieldController@index');
-Route::post('dynamic-field/insert', 'DynamicFieldController@insert')->name('dynamic-field.insert');
+Route::post('/insert', 'DynamicFieldController@insert')->name('.insert');
 
 Route::get('/data', 'DataController@index');
 Route::get('/data/search', 'DataController@search');

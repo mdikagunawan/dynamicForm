@@ -12,9 +12,7 @@
 </head>
 <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <nav class="navbar navbar-expand navbar-light bg-light">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/insert">Insert</a>
@@ -23,7 +21,6 @@
                             <a class="nav-link" href="/data">Data</a>
                         </li>
                     </ul>
-                </div>
             </nav>
 
     <div class="container">
@@ -66,10 +63,10 @@
                                                 <div class="dropdown">
                                                         <label for="posisi">Posisi</label>
                                                         <select class="form-control @error('posisi') is-invalid @enderror" id="posisi" name="posisi[]" value="{{old('posisi')}}">
-                                                                <option selected>Pilih Posisi...</option>
-                                                                <option>Frontend</option>
-                                                                <option>Backend</option>
-                                                                <option>Fullstack</option>
+                                                                <option value="Pilih" selected>Pilih Posisi...</option>
+                                                                <option value="Frontend">Frontend</option>
+                                                                <option value="Backend">Backend</option>
+                                                                <option value="Fullstack">Fullstack</option>
                                                         </select>
                                                         @error('posisi') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div>
@@ -106,6 +103,13 @@
 <script type="text/javascript">
     $(document).ready(function(){ 
         var i=1;
+        
+                $("#nama").val('');
+                $("#username").val('');
+                $("#password").val('');
+                $("#email").val('');
+                $("#telefon").val('');
+                $("#posisi").val('Pilih');
 
     $(document).on('click', '.btn_close', function(){  
        var button_id = $(this).attr("id");   
@@ -183,12 +187,12 @@
                     }
                     });
                 $.ajax({
-                    url:'{{ route("dynamic-field.insert") }}',
+                    url:'{{ route(".insert") }}',
                     method:'post',
                     data:$(this).serialize(),
                     dataType:'json',
                     beforeSend:function(){
-                        $('#save').attr('disabled','disabled');
+                        $('#submit').attr('disabled','disabled');
                     },
                     success:function(data)
                     {
@@ -200,12 +204,16 @@
                                 error_html += '<p>'+data.error[count]+'</p>';
                             }
                             $('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
+                            $('#submit').attr('disabled', false);
                         }
                         else
                         {
                             $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+                                 setTimeout(function(){
+                                    location.reload(); 
+                                 }, 3000); 
+                            // $('#submit').attr('disabled', false);
                         }
-                        $('#save').attr('disabled', false);
                     }
                 }) 
         }); 

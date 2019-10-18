@@ -12,18 +12,15 @@
 </head>
 <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
+            <nav class="navbar navbar-expand navbar-light bg-light">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/insert">Insert</a>
+                </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/insert">Insert</a>
+                        <a class="nav-link" href="/data">Data</a>
                     </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/data">Data</a>
-                        </li>
-                    </ul>
-                </div>
+                </ul>
             </nav>
 
             <div class="container-fluid">
